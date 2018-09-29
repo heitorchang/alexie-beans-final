@@ -28,7 +28,7 @@
 <a href="transactions.php">Add transaction</a> |
 <a href="search.php">Search</a> |
 <a href="acctgroups_all_and_this_month.php">Groups</a> |
-<a href="adjust.html" target="_blank">Adjust balance</a> |
+<a href="adj_choose_acct.php">Adjust balance</a> |
 <a href="notes.html" target="_blank">Notes</a>
 <hr>
 
