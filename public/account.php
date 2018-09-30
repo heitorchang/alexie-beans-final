@@ -37,7 +37,7 @@ and created <= :end_created
 order by created desc
 limit :row_limit";
 
-$full_sql = "select date_format(t.created, '%Y-%m-%d %H:%i %a') as created,
+$full_sql = "select t.id as id, date_format(t.created, '%Y-%m-%d %H:%i %a') as created,
 t.description as description,
 t.amount as amount, ad.name as debit, ac.name as credit from transaction t
 inner join account ad on ad.id = t.debit
@@ -73,7 +73,8 @@ $stmt->execute([":username" => $_SESSION["username"],
         }
         print("</td>");
         print("<td>{$row['debit']}</td>");
-        print("<td>{$row['credit']}</td>");        
+        print("<td>{$row['credit']}</td>");
+        print("<td><a href='confirm_del_tr.php?id={$row['id']}'>delete</a></td>");
         print("</tr>");
     }
     ?>

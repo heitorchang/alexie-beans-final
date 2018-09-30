@@ -113,7 +113,7 @@ values (:username, :description, :currency, :amount, :debit, :credit, :created)"
 }
 
 // display 5 newest transactions
-$sql = "select date_format(t.created, '%Y-%m-%d %H:%i:%s %a') as created, t.description, c.symbol, c.cents, t.amount, debit.name as debit, credit.name as credit
+$sql = "select t.id, date_format(t.created, '%Y-%m-%d %H:%i:%s %a') as created, t.description, c.symbol, c.cents, t.amount, debit.name as debit, credit.name as credit
 from transaction t
 inner join currency c on t.currency = c.id
 inner join account debit on t.debit = debit.id
@@ -147,6 +147,7 @@ print("(" . $count_stmt->fetch()['count_id'] . " total)");
             <th class="right_align">Amt</th>
             <th>Dr</th>
             <th>Cr</th>
+            <th>Del?</th>
         </tr>
     </thead>
 <?php 
@@ -161,6 +162,7 @@ foreach ($stmt as $row) {
         <td class='right_align'>{$row['symbol']} $amount_value</td>
         <td>{$row['debit']}</td>
         <td>{$row['credit']}</td>
+        <td><a href='confirm_del_tr.php?id={$row['id']}'>delete</a></td>
         </tr>");
 }
 ?>
