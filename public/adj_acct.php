@@ -14,14 +14,45 @@ require_once("formatters.php");
 
 <?php
 
-function currentBalance($dbh, $acct_id, $currency_id) {
+function currentBalance($dbh, $acct_id, $currency_id, $sign) {    
     $get_debits_sql = "select sum(amount) as debits from transaction where debit = :acct_id and currency = :currency_id";
+    $get_credits_sql = "select sum(amount) as credits from transaction where credit = :acct_id and currency = :currency_id";
+    
     $stmt = $dbh->prepare($get_debits_sql);
     $stmt->execute([":acct_id" => $acct_id,
                     ":currency_id" => $currency_id]);
-    return $stmt->fetch()['debits'];
-    
+    $dr_amt = $stmt->fetch()['debits'];
+
+    $stmt = $dbh->prepare($get_credits_sql);
+    $stmt->execute([":acct_id" => $acct_id,
+                    ":currency_id" => $currency_id]);
+    $cr_amt = $stmt->fetch()['credits'];
+
+    return $sign * ($dr_amt - $cr_amt);
 }
+
+function displayAccountSelect($name, $accounts) {
+    $select = "<select name='$name'>";
+    $select .= "<option value='0'>choose acct</option>";
+    foreach ($accounts as $account) {
+        $select .= "<option value='{$account['id']}'>{$account["name"]}</option>";
+    }
+    $select .= "</select>";
+    print($select);
+}
+
+// retrieve account ids
+$sql = "select a.id, a.name
+from account a
+inner join user u on a.username = u.username
+where a.username = :username
+order by name";
+
+$stmt = $dbh->prepare($sql);
+$stmt->execute([":username" => $_SESSION['username']]);
+
+$account_ids = $stmt->fetchAll();
+
 
 ?>
 
@@ -58,18 +89,25 @@ foreach ($stmt as $currency_row) {
     <?php
     // Get account name and sign
 
-    // TODO: get sign to auto-compute dr/cr
-    
     $acct_name_sql = "select a.name, at.sign from account a
 inner join account_type at on a.account_type = at.id
-where id = :id";
+where a.id = :id";
     $stmt = $dbh->prepare($acct_name_sql);
     $stmt->execute([":id" => $acct_id]);
 
-    echo $stmt->fetch()['name'];
+    $row = $stmt->fetch();
+    $sign = $row['sign'];
+    
+    echo $row['name'];
     
     ?>
     </b>
+
+    <br>
+    Acct sign: <?= $row['sign'] ?>
+
+    <input type="hidden" name="acct_id" value="<?= $acct_id ?>">
+    <input type="hidden" name="sign" value="<?= $row['sign'] ?>">
 
     <br><br>
 
@@ -85,9 +123,9 @@ where id = :id";
             echo "<td class='right_align'>";
             
             if ($cents[$curr_id] > 0) {
-                echo separate_amount((int) currentBalance($dbh, $acct_id, $curr_id));
+                echo separate_amount((int) currentBalance($dbh, $acct_id, $curr_id, $sign));
             } else {
-                echo currentBalance($dbh, $acct_id, $curr_id);
+                echo currentBalance($dbh, $acct_id, $curr_id, $sign);
             }
             
             echo "</td>";
@@ -99,39 +137,43 @@ where id = :id";
     </table>
 
     <hr>
-    
-    Enter new currency and balance:
 
-    <select name="currency">
-        <?php
-        $sql = "select id, code from currency where username = :username";
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute([":username" => $_SESSION["username"]]);
-        
-        foreach ($stmt as $currency_row) {
-            $selected = ($currency_row['id'] == $base_currency) ? " selected" : "";
-            print("<option value='{$currency_row['id']}'$selected>{$currency_row['code']}</option>");
-        }
+    <table>        
+        <tr>
+            <td>
+                New balance:
+            </td>
+            <td>
+                <select name="currency">
+                    <?php
+                    $sql = "select id, code from currency where username = :username";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute([":username" => $_SESSION["username"]]);
+                    
+                    foreach ($stmt as $currency_row) {
+                        $selected = ($currency_row['id'] == $base_currency) ? " selected" : "";
+                        print("<option value='{$currency_row['id']}'$selected>{$currency_row['code']}</option>");
+                    }
+                    
+                    ?>
+                </select>
+                <input name="new_balance" autofocus>
+                    
+            </td>
+        </tr>
 
-        ?>
-    </select>
+        <tr>
+            <td>
+                Description</td><td><input name="desc"></td>
+        </tr>
 
-    <input name="new_balance">
-
-    <br><br>
-    Select other account:
-
-    <select name="dr_cr">
-        <option value="dr">debit</option>
-        <option value="cr">credit</option>
-    </select>
-
-    <select name="other">
-        <option value="1">Other acct</option>
-    </select>
-        
-
-    
+        <tr>
+            <td>Other account:</td>
+            <td>
+                <?= displayAccountSelect("other", $account_ids) ?>
+            </td>
+        </tr>
+    </table>
     
     <input type="submit">
 </form>

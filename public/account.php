@@ -23,6 +23,9 @@ if (isset($_GET["row_limit"])) {
 <a href="balances.php?currency=<?= $currency ?>&amp;start=<?= $start_date ?>&amp;end=<?= $end_date ?>">Balances for this time period</a>
 <br><br>
 
+<a href="adj_acct.php?acct=<?= $_GET['id'] ?>">Adjust balance</a>
+<br><br>
+
 <?php
 
 $lazy_sql = "select created, description, amount, debit, credit from transaction
