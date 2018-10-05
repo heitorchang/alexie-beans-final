@@ -4,7 +4,7 @@ require_once("../db.php");
 require_once("../util.php");
 require_once("formatters.php");
 
-echo "adj bal";
+// echo "adj bal";
 
 // set default timezone
 date_default_timezone_set('America/Sao_Paulo');
