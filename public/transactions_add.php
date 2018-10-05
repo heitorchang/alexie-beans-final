@@ -29,8 +29,6 @@ values (:username, :description, :currency, :amount, :debit, :credit, :created)"
                     ":debit" => $_POST['debit'],
                     ":credit" => $_POST['credit'],
                     ":created" => $datetime]);
-    println("Inserted transaction {$_POST['description']} {$_POST['amount']}");
-    println("");
 }
 
 ob_end_clean();
