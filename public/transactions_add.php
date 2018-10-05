@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("../db.php");
+require_once("formatters.php");
 
 // insert a transaction if form was submitted
 if (isset($_POST['description'])) {
