@@ -83,6 +83,13 @@ function displayCurrencySelect($currencies) {
 <?php
 
 // display 5 newest transactions
+
+    if (isset($_GET['limnew'])) {
+        $limit_newest = (int) trim($_GET['limnew']);
+    } else {
+        $limit_newest = 5;
+    }
+    
 $sql = "select t.id, date_format(t.created, '%Y-%m-%d %H:%i:%s %a') as created, t.description, c.symbol, c.cents, t.amount, debit.name as debit, credit.name as credit
 from transaction t
 inner join currency c on t.currency = c.id
@@ -90,13 +97,16 @@ inner join account debit on t.debit = debit.id
 inner join account credit on t.credit = credit.id
 inner join user u on t.username = u.username
 where t.username = :username
-order by created desc, code, amount desc limit 5";
+order by created desc, code, amount desc limit :limnew";
 
 $stmt = $dbh->prepare($sql);
-$stmt->execute([":username" => $_SESSION['username']]);
+
+$stmt->execute([":username" => $_SESSION['username'],
+                ":limnew" => $limit_newest]);
 
 ?>
-5 newest transactions
+
+<?= $limit_newest ?> newest transactions
 
 <?php 
 // count number of transactions
