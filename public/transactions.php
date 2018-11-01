@@ -106,7 +106,7 @@ $stmt->execute([":username" => $_SESSION['username'],
 
 ?>
 
-<?= $limit_newest ?> newest transactions
+<?= $limit_newest ?> newest transactions <a href="transactions.php?limnew=30">(show 30)</a>
 
 <?php 
 // count number of transactions
