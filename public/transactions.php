@@ -97,7 +97,7 @@ inner join account debit on t.debit = debit.id
 inner join account credit on t.credit = credit.id
 inner join user u on t.username = u.username
 where t.username = :username
-order by created desc, code, amount desc limit :limnew";
+order by id desc, code, amount desc limit :limnew";
 
 $stmt = $dbh->prepare($sql);
 
