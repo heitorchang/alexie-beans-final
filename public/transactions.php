@@ -61,7 +61,7 @@ function displayCurrencySelect($currencies) {
         <tr>
             <td>Amount</td>
             <td><?php displayCurrencySelect($currency_ids) ?>
-                <input type="text" name="amount">
+                <input type="number" name="amount">
             </td>
         </tr>
         <tr>
