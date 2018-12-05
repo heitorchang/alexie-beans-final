@@ -102,6 +102,16 @@ foreach ($account_balances as $id => $value) {
     $account_balances[$id] = $account_debits[$id] + $account_credits[$id];
 }
 
+// 5 dec 2018
+// output % of month elapsed, day / 30, 31, 28
+
+if (isset($_GET["start"])) {
+   print("% of Month elapsed: ");
+   print((int) date("d") . " / " . (int) date("t") . " = ");
+   print(round((int) date("d") / (int) date("t") * 100) . "%");
+   print("<br>");
+}
+
 // 9 feb 2016
 // budget total
 $budget_total = 0;
