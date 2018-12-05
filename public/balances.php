@@ -107,8 +107,8 @@ foreach ($account_balances as $id => $value) {
 
 if (isset($_GET["start"])) {
    print("% of Month elapsed: ");
-   print((int) date("d") . " / " . (int) date("t") . " = ");
-   print(round((int) date("d") / (int) date("t") * 100) . "%");
+   print("(" . (int) date("d") . " (- 1)) / " . (int) date("t") . " = ");
+   print(round(((int) date("d") - 1) / (int) date("t") * 100) . "%");
    print("<br>");
 }
 
