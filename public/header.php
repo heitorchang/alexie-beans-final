@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
             println('Please <a href="login.php">log in</a>');
             exit(0);
         } else {
-            print("<a href='index.php'>AB</a> ");
+            print("<a href='index.php'>ALEXIE Beans</a> ");
             print("(" . $_SESSION['username'] . ")");
         ?>
  <a href="balances.php">Balances (all time)</a>
@@ -29,7 +29,7 @@
 <a href="search.php">Search</a> |
 <a href="acctgroups_all_and_this_month.php">Groups</a> |
 <!-- <a href="adj_choose_acct.php">Adjust balance</a> | -->
-<a href="notes.html" target="_blank">Notes</a>
+<a href="notes.html" target="_blank">Hist.Notes</a>
 <hr>
 
 

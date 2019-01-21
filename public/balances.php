@@ -2,6 +2,10 @@
 
 // SEARCH "MONTHLY" TO UPDATE BUDGET
 
+// HACK TO HIDE STALE ACCOUNTS
+
+$hide_ids = [];
+
 require_once("header.php");
 require_once("formatters.php");
 ?>
@@ -126,22 +130,30 @@ foreach ($account_types as $type_id => $type) {
     print("<thead>
     <tr>
         <th colspan='2'>$type</th>
-    </tr>
-    </thead>");
+");
+    if ($type == "Expenses" && isset($_GET["start"])) {
+        print("<th colspan='3'>&nbsp;</th>");
+    }
+
+    print("</tr>");
+    print("</thead>");
     
     foreach ($account_ref[$type_id] as $account_id => $account_name) {
-        // update type total
-        $account_type_totals[$type_id] += $account_balances[$account_id];
-        
-        print("<tr>");
-        print("<td>");
-        print("<a href='account.php?id=$account_id&amp;currency=$currency&amp;start=$start_date&amp;end=$end_date'>$account_name</a></td>");
-        print("<td class='right_align'>");
-        if ($cents > 0) {
-            print(separate_amount($account_balances[$account_id]));
-        } else {
-            print($account_balances[$account_id]);
-        }
+
+	// HACK TO HIDE ACCOUNT
+	if (!in_array($account_id, $hide_ids)) {
+            // update type total
+            $account_type_totals[$type_id] += $account_balances[$account_id];
+
+           print("<tr>");
+	   print("<td>");
+            print("<a href='account.php?id=$account_id&amp;currency=$currency&amp;start=$start_date&amp;end=$end_date'>$account_name</a></td>");
+            print("<td class='right_align'>");
+            if ($cents > 0) {
+                print(separate_amount($account_balances[$account_id]));
+            } else {
+                print($account_balances[$account_id]);
+            }
 
 // personal patch to insert budget %
 if ($type == "Expenses" && isset($_GET["start"])) {
@@ -150,7 +162,7 @@ if ($type == "Expenses" && isset($_GET["start"])) {
     $budget = ["acct_name" => 0,
 
 // MONTHLY BUDGET (monthly budget)
-"bomjd" => 1250,
+"bomjd" => 1000,
 "comm" => 30,  // 30 claro
 "doac" => 0,
 "elec" => 0,
@@ -183,9 +195,9 @@ if ($type == "Expenses" && isset($_GET["start"])) {
     if ($budget_left < 0) {
         $budget_overdrawn += $budget_left;
     }
-    print(" / </td><td align='right'> $acct_budget = </td><td align='right'>$budget_percentage</td>");
+    print(" / </td><td class='right_align'> $acct_budget = </td><td class='right_align'>$budget_percentage</td>");
 
-    print("<td align='right'>");
+    print("<td class='right_align'>");
 
 print("&nbsp;");
 
@@ -206,14 +218,21 @@ if ($budget_left < 0) {
   print(")</span>");
 }
 
-print("</td>");
+// print("</td>");
 
 } // end patch
 
         print("</td>");
         print("</tr>");
     }
+	}  // END HACK TO HIDE ACCOUNT
+
+    if ($type == "Expenses" && isset($_GET["start"])) {
+    print("<tr><td colspan='5'><hr></td></tr>");
+    } else {
     print("<tr><td colspan='2'><hr></td></tr>");
+    }
+    
     print("<tr><td>Total</td><td>$currency_symbol ");
     if ($cents > 0) {
         print(separate_amount($account_type_totals[$type_id]));
@@ -223,10 +242,10 @@ print("</td>");
 
     // Budget total
     if ($type == "Expenses" && isset($_GET["start"])) {
-	print(" / </td><td align='right'> $budget_total = </td>");
+	print(" / </td><td class='right_align'> $budget_total = </td>");
 	$total_budget_percentage = ceil($account_type_totals[$type_id] / $budget_total);
 	// PRINT REST %
-	// print("<td align='right'>$total_budget_percentage%</td>");
+	// print("<td class='right_align'>$total_budget_percentage%</td>");
 
 // total of remaining budget (in currency)
 $budget_total_left = round($budget_total - $account_type_totals[$type_id] / 100);
@@ -238,10 +257,10 @@ $budget_total_left = round($budget_total - $account_type_totals[$type_id] / 100)
 
 $amount_needed = $budgets_positive;
 
-print("<td align='right' style='color: #00F;' title='Amount needed to cover 100% of necessary expenses'>$amount_needed</td>");
+print("<td class='right_align' style='color: #00F;' title='Amount needed to cover 100% of necessary expenses'>$amount_needed</td>");
 
 
-print("<td align='right'>");
+print("<td class='right_align'>");
 
 
 if ($budget_overdrawn < 0) {
@@ -261,9 +280,9 @@ if ($budget_overdrawn < 0) {
   print(")</span>");    
 }
 
-print("</td>");
+// print("</td>");
 
-print("<tr><td colspan='5' align='right' style='color: red;' title='Excess'>(" . abs($budget_overdrawn) . ")</td></tr>");
+print("<tr><td colspan='5' class='right_align' style='color: red;' title='Excess'>(" . abs($budget_overdrawn) . ")</td></tr>");
 
     }  // end budget total
     
