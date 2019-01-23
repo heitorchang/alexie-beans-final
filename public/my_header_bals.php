@@ -4,10 +4,9 @@
 
 require_once("formatters.php");
 
-$acct_ids = [4, 32, 31, 8, 3];
+$acct_ids = [4, 106, 8, 3];
 $names = ["4" => "itcor",
-          "32" => "brpou",
-          "31" => "brcor",
+          "106" => "inter",
 	  "8" => "ptlcx",
 	  "3" => "wal"];  // hardcode to avoid running another query
 
