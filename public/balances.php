@@ -162,23 +162,23 @@ if ($type == "Expenses" && isset($_GET["start"])) {
     $budget = ["acct_name" => 0,
 
 // MONTHLY BUDGET (monthly budget)
-"bomjd" => 1000,
-"comm" => 30,  // 30 claro
+"alug" => 0,
+"comm" => 0,
 "doac" => 0,
 "elec" => 0,
 "ent"  => 0, 
 "exp"  => 0,
-"groc" => 670,
+"groc" => 650,
 "home" => 0,
-"junk" => 0,
+"junk" => 400,
 "livr" => 0,
-"med"  => 350, // alex, meds
+"med"  => 250, // meds
 "pres" => 0,
-"rest" => 0,
+"rest" => 400,
 "self" => 0,
-"svc"  => 0, // val end of year 2018, in 2019 it is 480
-"tar"  => 0,  // no one is supposed to charge me
-"tr"   => 200,  // mensal
+"svc"  => 0,
+"tar"  => 0,
+"tr"   => 300, 
 
 ];
 
