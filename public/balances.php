@@ -163,22 +163,22 @@ if ($type == "Expenses" && isset($_GET["start"])) {
 
 // MONTHLY BUDGET (monthly budget)
 "alug" => 0,
-"comm" => 35,
+"comm" => 30,
 "doac" => 0,
 "elec" => 0,
 "ent"  => 0, 
 "exp"  => 0,
-"groc" => 615,
+"groc" => 600,
 "home" => 0,
-"junk" => 400,
+"junk" => 0,
 "livr" => 0,
-"med"  => 250, // meds
+"med"  => 450,
 "pres" => 0,
-"rest" => 400,
+"rest" => 0,
 "self" => 0,
 "svc"  => 0,
-"tar"  => 0,
-"tr"   => 300, 
+"tar"  => 58,
+"tr"   => 288, 
 
 ];
 
