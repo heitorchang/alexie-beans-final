@@ -168,7 +168,7 @@ if ($type == "Expenses" && isset($_GET["start"])) {
 "elec" => 0,
 "ent"  => 0, 
 "exp"  => 0,
-"groc" => 600,
+"groc" => 632,
 "home" => 0,
 "junk" => 0,
 "livr" => 0,
@@ -178,7 +178,7 @@ if ($type == "Expenses" && isset($_GET["start"])) {
 "self" => 0,
 "svc"  => 0,
 "tar"  => 58,
-"tr"   => 288, 
+"tr"   => 330, 
 
 ];
 
