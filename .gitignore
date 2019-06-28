@@ -2,3 +2,6 @@ config_secret.php
 config_secret.php~
 .htaccess
 .htaccess~
+
+notes.html
+hist.html
