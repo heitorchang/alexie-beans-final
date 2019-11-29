@@ -4,13 +4,16 @@
 
 require_once("formatters.php");
 
-$acct_ids = [31, 6, 4, 106, 8, 3];
+// $acct_ids = [31, 4, 106, 3, 136];
+$acct_ids = [31, 162, 3, 6, 4];
 $names = ["31" => "brc",
-          "6" => "itp",
           "4" => "itc",
+	  "3" => "wal",
           "106" => "int",
-	  "8" => "ptl",
-	  "3" => "wal"];  // hardcode to avoid running another query
+	  "162" => "drw",
+	  // "136" => "nubank",
+          "6" => "itpou",
+         ];  // hardcode to avoid running another query
 
 $sql_for_header_total = "select sum(acct_amounts) as total from (select sum(amount) as acct_amounts from transaction where debit = :acct_id and currency=1 union all select -sum(amount) from transaction where credit = :acct_id_repeat and currency=1) acct_amounts";
 

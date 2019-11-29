@@ -2,11 +2,11 @@
 require_once("header.php");
 require_once("formatters.php");
 
-// set transaction row limit to 30 by default
+// set transaction row limit to 60 by default
 if (isset($_GET["row_limit"])) {
     $row_limit = $_GET["row_limit"];
 } else {
-    $row_limit = 30;
+    $row_limit = 60;
 }
 
 ?>

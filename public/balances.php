@@ -162,24 +162,27 @@ if ($type == "Expenses" && isset($_GET["start"])) {
     $budget = ["acct_name" => 0,
 
 // MONTHLY BUDGET (monthly budget)
-"alug" => 0,
+"alug" => 700,
 "comm" => 30,
 "doac" => 0,
 "elec" => 0,
 "ent"  => 0, 
 "exp"  => 0,
-"groc" => 632,
+"groc" => 0,
 "home" => 0,
 "junk" => 0,
 "livr" => 0,
-"med"  => 450,
+"med"  => 300,
 "pres" => 0,
 "rest" => 0,
 "self" => 0,
 "svc"  => 0,
-"tar"  => 58,
-"tr"   => 330, 
+"tar"  => 68,
+"tr"   => 300, 
 
+"shgroc" => 1022,
+"shjunk" => 30,
+"shrest" => 300,
 ];
 
 
