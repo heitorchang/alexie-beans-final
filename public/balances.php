@@ -148,7 +148,7 @@ foreach ($account_types as $type_id => $type) {
            print("<tr>");
 	   print("<td>");
             print("<a href='account.php?id=$account_id&amp;currency=$currency&amp;start=$start_date&amp;end=$end_date'>$account_name</a></td>");
-            print("<td class='right_align'>");
+            print("<td class='right_align' nowrap>");
             if ($cents > 0) {
                 print(separate_amount($account_balances[$account_id]));
             } else {
@@ -198,7 +198,7 @@ if ($type == "Expenses" && isset($_GET["start"])) {
     if ($budget_left < 0) {
         $budget_overdrawn += $budget_left;
     }
-    print(" / </td><td class='right_align'> $acct_budget = </td><td class='right_align'>$budget_percentage</td>");
+    print(" / </td><td class='right_align' nowrap> $acct_budget = </td><td class='right_align' nowrap>$budget_percentage</td>");
 
     print("<td class='right_align'>");
 
